@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,5 +9,15 @@ import { CommonModule } from '@angular/common';
   styleUrl: './cell.component.css'
 })
 export class CellComponent {
-  @Input() cellcontents!: string;
+  @Input() parentgrid!: string[];
+  @Input() cellIndex!: number;
+
+  @Output() parentgridChange = new EventEmitter<string[]>();
+
+  updateParentGrid(evt: any): void {
+    this.parentgrid[this.cellIndex] = evt.target.value;
+    console.log("Changing "+this.cellIndex);
+    this.parentgridChange.emit(this.parentgrid);
+  }
+
 }

@@ -20,4 +20,9 @@ export class GridComponent {
     this.complete = this.sudokuService.getComplete();
     this.valid = this.sudokuService.getValid();
   }
+
+  update(): void {
+    console.log("Grid updated");
+    console.log(this.sudokuGrid);
+  }
 }
