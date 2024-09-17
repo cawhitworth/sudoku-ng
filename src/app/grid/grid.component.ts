@@ -13,8 +13,11 @@ import { SudokuService } from '../sudoku.service';
 export class GridComponent {
   sudokuService: SudokuService = inject(SudokuService);
   sudokuGrid: string[];
-
+  complete: boolean = false;
+  valid: boolean = false;
   constructor() {
     this.sudokuGrid = this.sudokuService.getGrid()
+    this.complete = this.sudokuService.getComplete();
+    this.valid = this.sudokuService.getValid();
   }
 }
