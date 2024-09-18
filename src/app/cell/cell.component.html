@@ -1,5 +1,5 @@
-<div class="sudoku-cell">
-    <input type="text" value="{{
+<div class="sudoku-cell" [class.highlighted]="highlighted" (click)="cellClick()">
+    {{
         parentgrid.cells[cellIndex].empty ? '' : parentgrid.cells[cellIndex].value
-    }}" (change)="updateParentGrid($event)" />
+    }}
 </div>

@@ -1,7 +1,7 @@
 <div class="sudoku-grid">
     <app-cell *ngFor="let _ of [].constructor(81); let i = index"
-    [cellIndex]="i"
-    [(parentgrid)]="sudokuGrid" (parentgridChange)="update()"
+    [cellIndex]="i" [highlighted]="highlightedCell == i"
+    [(parentgrid)]="sudokuGrid" (parentgridChange)="update()" (gridClicked)="gridClicked($event)"
     ></app-cell>
 </div>
 <div>

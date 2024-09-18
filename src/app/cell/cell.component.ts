@@ -12,8 +12,14 @@ import { Grid } from '../grid';
 export class CellComponent {
   @Input() parentgrid!: Grid;
   @Input() cellIndex!: number;
+  @Input() highlighted: boolean = false;
 
   @Output() parentgridChange = new EventEmitter<Grid>();
+  @Output() gridClicked = new EventEmitter<number>();
+
+  cellClick(): void {
+    this.gridClicked.emit(this.cellIndex);
+  }
 
   updateParentGrid(evt: any): void {
     let newValue: number = parseInt(evt.target.value);

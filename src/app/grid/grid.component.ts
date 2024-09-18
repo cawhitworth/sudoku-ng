@@ -14,6 +14,7 @@ import { Grid } from '../grid';
 export class GridComponent {
   sudokuService: SudokuService = inject(SudokuService);
   sudokuGrid: Grid;
+  highlightedCell: number = -1;
   complete: boolean = false;
   valid: boolean = false;
   constructor() {
@@ -25,5 +26,9 @@ export class GridComponent {
   update(): void {
     console.log("Grid updated");
     console.log(this.sudokuGrid);
+  }
+
+  gridClicked(cell: number): void {
+    this.highlightedCell = cell;
   }
 }
