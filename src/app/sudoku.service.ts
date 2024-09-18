@@ -39,7 +39,7 @@ export class SudokuService
     return result.valid;
   }
 
-  partial       = ".842..7.." +
+  partial       = "8842..7.." +
                   "...86.42." +
                   "3.51....9" +
                   ".59.26.7." +
@@ -82,7 +82,7 @@ export class SudokuService
         if (working_set.has(i.value)) {
             result.valid = false;
         }
-        working_set.add(i)
+        working_set.add(i.value);
     }
 
     return result;

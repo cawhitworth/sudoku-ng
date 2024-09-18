@@ -5,6 +5,9 @@ import { SudokuService } from '../sudoku.service';
 import { Grid } from '../grid';
 
 @Component({
+  host: {
+    '(document:keyup)': 'keyPressed($event)'
+  },
   selector: 'app-grid',
   standalone: true,
   imports: [CommonModule, CellComponent],
@@ -25,10 +28,29 @@ export class GridComponent {
 
   update(): void {
     console.log("Grid updated");
-    console.log(this.sudokuGrid);
+    this.complete = this.sudokuService.getComplete();
+    this.valid = this.sudokuService.getValid();
+    console.log(`Complete: ${this.complete}`);
+    console.log(`Valid: ${this.valid}`);
   }
 
   gridClicked(cell: number): void {
+    console.log(`Cell ${cell} clicked`);
     this.highlightedCell = cell;
+  }
+
+  keyPressed(evt: KeyboardEvent): void {
+    console.log(`Key ${evt.key} pressed`);
+    let num = parseInt(evt.key);
+    if (this.highlightedCell >=0 && this.highlightedCell <= 81) {
+      if (!Number.isNaN(num)) {
+        this.sudokuGrid.cells[this.highlightedCell].value = num;
+        this.sudokuGrid.cells[this.highlightedCell].empty = false;
+      }
+      if (evt.key == 'Delete' || evt.key == 'Backspace') {
+        this.sudokuGrid.cells[this.highlightedCell].empty = true;
+      }
+    }
+    this.update();
   }
 }
