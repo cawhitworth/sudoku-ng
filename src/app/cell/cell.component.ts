@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Grid } from '../grid';
 
 @Component({
   selector: 'app-cell',
@@ -9,14 +10,20 @@ import { CommonModule } from '@angular/common';
   styleUrl: './cell.component.css'
 })
 export class CellComponent {
-  @Input() parentgrid!: string[];
+  @Input() parentgrid!: Grid;
   @Input() cellIndex!: number;
 
-  @Output() parentgridChange = new EventEmitter<string[]>();
+  @Output() parentgridChange = new EventEmitter<Grid>();
 
   updateParentGrid(evt: any): void {
-    this.parentgrid[this.cellIndex] = evt.target.value;
-    console.log("Changing "+this.cellIndex);
+    let newValue: number = parseInt(evt.target.value);
+    if (Number.isNaN(newValue)) {
+      this.parentgrid.cells[this.cellIndex].empty = true;
+    } else if (newValue >= 1 && newValue <= 9) {
+      this.parentgrid.cells[this.cellIndex].empty = false;
+      this.parentgrid.cells[this.cellIndex].value = newValue;
+    }
+    console.log("Changing: " + this.cellIndex+" to " + (this.parentgrid.cells[this.cellIndex].empty ? "Empty" : this.parentgrid.cells[this.cellIndex].value));
     this.parentgridChange.emit(this.parentgrid);
   }
 

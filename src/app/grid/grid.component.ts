@@ -2,6 +2,7 @@ import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CellComponent } from "../cell/cell.component";
 import { SudokuService } from '../sudoku.service';
+import { Grid } from '../grid';
 
 @Component({
   selector: 'app-grid',
@@ -12,7 +13,7 @@ import { SudokuService } from '../sudoku.service';
 })
 export class GridComponent {
   sudokuService: SudokuService = inject(SudokuService);
-  sudokuGrid: string[];
+  sudokuGrid: Grid;
   complete: boolean = false;
   valid: boolean = false;
   constructor() {

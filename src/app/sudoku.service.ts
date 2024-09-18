@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Grid } from './grid';
+import { Cell } from './cell';
 
 export class ValidationResult {
     constructor(valid: boolean, complete: boolean) {
@@ -20,7 +22,7 @@ export class ValidationResult {
 })
 export class SudokuService
 {
-  getGrid(): string[]
+  getGrid(): Grid
   {
     return this.grid;
   }
@@ -47,23 +49,37 @@ export class SudokuService
                   ".1..5.24." +
                   "5.26.....";
 
-  grid: string[] = [];
+  grid: Grid = {
+    cells: new Array<Cell>(81)
+  };
 
   constructor() {
-    for (let c of this.partial) { this.grid.push(c); }
+    for (let i = 0; i < 81; i ++) {
+      this.grid.cells[i] = {
+        empty: false,
+        value: 0,
+        candidates: new Array<number>()
+      }
+      let c = this.partial[i];
+      if (c === '.') {
+        this.grid.cells[i].empty = true;
+      } else {
+        this.grid.cells[i].value = parseInt(c);
+      }
+    }
   }
 
-  validate_set(set: Array<string>) : ValidationResult
+  validate_set(set: Array<Cell>) : ValidationResult
   {
     let working_set = new Set();
     let result = new ValidationResult(true, true);
 
     for(const i of set) {
-        if (i === '.') {
+        if (i.empty) {
             result.complete = false;
             continue;
         }
-        if (working_set.has(i)) {
+        if (working_set.has(i.value)) {
             result.valid = false;
         }
         working_set.add(i)
@@ -81,16 +97,16 @@ export class SudokuService
   {
     let result = new ValidationResult(true, true);
     for(let rch = 0; rch < 9; rch++) {
-        let row_array: Array<string> = new Array();
-        let col_array: Array<string> = new Array();
-        let house_array: Array<string> = new Array();
+        let row_array: Array<Cell> = new Array();
+        let col_array: Array<Cell> = new Array();
+        let house_array: Array<Cell> = new Array();
         for(let i = 0; i < 9; i ++) {
-            row_array.push(this.grid[this.index(i, rch)]);
-            col_array.push(this.grid[this.index(rch, i)]);
+            row_array.push(this.grid.cells[this.index(i, rch)]);
+            col_array.push(this.grid.cells[this.index(rch, i)]);
 
             let house_row = 3 * Math.floor(rch / 3);
             let house_col = 3 * (rch % 3);
-            house_array.push(this.grid[this.index(house_col + i % 3, house_row + Math.floor(i / 3))]);
+            house_array.push(this.grid.cells[this.index(house_col + i % 3, house_row + Math.floor(i / 3))]);
         }
         result.and(this.validate_set(row_array));
         result.and(this.validate_set(col_array));

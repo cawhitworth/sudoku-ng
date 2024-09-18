@@ -1,5 +1,5 @@
 <div class="sudoku-grid">
-    <app-cell *ngFor="let cell of sudokuGrid; index as i"
+    <app-cell *ngFor="let _ of [].constructor(81); let i = index"
     [cellIndex]="i"
     [(parentgrid)]="sudokuGrid" (parentgridChange)="update()"
     ></app-cell>

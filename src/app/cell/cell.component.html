@@ -1,3 +1,5 @@
 <div class="sudoku-cell">
-    <input type="text" value="{{parentgrid[cellIndex]}}" (change)="updateParentGrid($event)" />
+    <input type="text" value="{{
+        parentgrid.cells[cellIndex].empty ? '' : parentgrid.cells[cellIndex].value
+    }}" (change)="updateParentGrid($event)" />
 </div>
