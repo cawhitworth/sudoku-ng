@@ -1,14 +1,20 @@
-<div class="sudoku-grid">
-    <app-cell *ngFor="let _ of [].constructor(81); let i = index"
-    [cellIndex]="i" [highlighted]="highlightedCell == i"
-    [(parentgrid)]="sudokuGrid" (parentgridChange)="update()" (gridClicked)="gridClicked($event)"
-    ></app-cell>
-</div>
-<div>
-    <p>
-        Complete: {{complete?"Yes":"No"}}
-    </p>
-    <p>
-        Valid: {{valid?"Yes":"No"}}
-    </p>
+<div class="sudoku-game">
+    <div class="sudoku-grid">
+        <app-cell *ngFor="let _ of [].constructor(81); let i = index"
+        [cellIndex]="i" [highlighted]="highlightedCell == i"
+        [(parentgrid)]="sudokuGrid" (parentgridChange)="update()" (gridClicked)="gridClicked($event)"
+        ></app-cell>
+    </div>
+    <div class="sudoku-controls">
+        <button>Annotate</button>
+        <button>Mark</button>
+    </div>
+    <div class="sudoku-status">
+        <p>
+            Complete: {{complete?"Yes":"No"}}
+        </p>
+        <p>
+            Valid: {{valid?"Yes":"No"}}
+        </p>
+    </div>
 </div>
