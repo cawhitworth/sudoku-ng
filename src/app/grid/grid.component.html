@@ -6,8 +6,15 @@
         ></app-cell>
     </div>
     <div class="sudoku-controls">
-        <button>Annotate</button>
-        <button>Mark</button>
+        <fieldset>
+            <legend>
+                Mode
+            </legend>
+            <input type="radio" id="annotate-button" name="input-mode" value="annotate" [(ngModel)]="mode"/>
+            <label for="annotate-button">Annotate</label>
+            <input type="radio" id="mark-button" name="input-mode" value="mark" [(ngModel)]="mode"/>
+            <label for="mark-button">Mark</label>
+        </fieldset>
     </div>
     <div class="sudoku-status">
         <p>

@@ -63,7 +63,6 @@ export class SudokuService
       let c = this.partial[i];
       if (c === '.') {
         this.grid.cells[i].empty = true;
-        this.grid.cells[i].candidates = [ 1, 3, 5, 7, 9 ];
       } else {
         this.grid.cells[i].value = parseInt(c);
       }
