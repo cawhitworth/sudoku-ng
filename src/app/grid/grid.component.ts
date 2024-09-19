@@ -66,23 +66,35 @@ export class GridComponent {
   keyPressed(evt: KeyboardEvent): void {
     console.log(`Key ${evt.key} pressed`);
     let num = parseInt(evt.key);
-    if (this.highlightedCell >=0 && this.highlightedCell <= 81) {
-      if (this.mode === "mark") {
-        if (!Number.isNaN(num)) {
-          this.setCellValue(this.highlightedCell, num);
-        }
-        if (evt.key == 'Delete' || evt.key == 'Backspace') {
-          this.sudokuGrid.cells[this.highlightedCell].empty = true;
-        }
-      } else { // Annotate
-        if (!Number.isNaN(num)) {
-          this.toggleInCellCandidates(this.highlightedCell, num);
-        }
+    if (this.mode === "mark") {
+      if (!Number.isNaN(num)) {
+        this.setCellValue(this.highlightedCell, num);
+      }
+      if (evt.key == 'Delete' || evt.key == 'Backspace') {
+        this.sudokuGrid.cells[this.highlightedCell].empty = true;
+      }
+    } else { // Annotate
+      if (!Number.isNaN(num)) {
+        this.toggleInCellCandidates(this.highlightedCell, num);
       }
     }
     if (evt.key === 'M' || evt.key === 'm') {
-      this.mode = this.mode === "mark" ? "annotate" : "mark";
-
+      this.mode = "mark";
+    }
+    if (evt.key === 'AM' || evt.key === 'a') {
+      this.mode = "annotate";
+    }
+    if (evt.key === 'ArrowLeft' && this.highlightedCell % 9 > 0) {
+      this.highlightedCell -= 1;
+    }
+    if (evt.key === 'ArrowRight' && this.highlightedCell % 9 < 8) {
+      this.highlightedCell += 1;
+    }
+    if (evt.key === 'ArrowUp' && this.highlightedCell > 8) {
+      this.highlightedCell -= 9;
+    }
+    if (evt.key === 'ArrowDown' && this.highlightedCell < 72) {
+      this.highlightedCell += 9;
     }
     this.update();
   }
