@@ -7,7 +7,8 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   host: {
-    '(document:keyup)': 'keyPressed($event)'
+    '(window:keydown)': 'keyDown($event)',
+    '(window:keyup)': 'keyPressed($event)'
   },
   selector: 'app-grid',
   standalone: true,
@@ -63,6 +64,14 @@ export class GridComponent {
     this.sudokuGrid.cells[cell].empty = true;
   }
 
+
+  keyDown(evt:KeyboardEvent): void {
+    const swallow = [ 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Delete', 'Backspace', 'Space']
+    if (swallow.includes(evt.key)) {
+      evt.preventDefault();
+    }
+  }
+
   keyPressed(evt: KeyboardEvent): void {
     console.log(`Key ${evt.key} pressed`);
     let num = parseInt(evt.key);
@@ -86,15 +95,19 @@ export class GridComponent {
     }
     if (evt.key === 'ArrowLeft' && this.highlightedCell % 9 > 0) {
       this.highlightedCell -= 1;
+      evt.preventDefault();
     }
     if (evt.key === 'ArrowRight' && this.highlightedCell % 9 < 8) {
       this.highlightedCell += 1;
+      evt.preventDefault();
     }
     if (evt.key === 'ArrowUp' && this.highlightedCell > 8) {
       this.highlightedCell -= 9;
+      evt.preventDefault();
     }
     if (evt.key === 'ArrowDown' && this.highlightedCell < 72) {
       this.highlightedCell += 9;
+      evt.preventDefault();
     }
     this.update();
   }
