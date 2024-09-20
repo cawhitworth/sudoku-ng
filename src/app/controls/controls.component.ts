@@ -13,6 +13,7 @@ export class ControlsComponent {
 
   @Output() modeChange = new EventEmitter<string>();
   @Output() autoNoteClick = new EventEmitter();
+  @Output() clearAllClick = new EventEmitter();
 
   onModeChange(mode:string) {
     console.log(`Mode change: ${mode}`);
@@ -21,5 +22,9 @@ export class ControlsComponent {
 
   onAutoNoteClick(): void {
     this.autoNoteClick.emit();
+  }
+
+  onClearAllClick(): void {
+    this.clearAllClick.emit();
   }
 }

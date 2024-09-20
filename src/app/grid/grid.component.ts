@@ -50,6 +50,14 @@ export class GridComponent {
     this.sudokuService.generateCandidates();
   }
 
+  onClearAllClick():void {
+    for(let i = 0; i < 81; i++) {
+      this.sudokuService.clearCell(i);
+      this.sudokuGrid.cells[i].candidates = [];
+    }
+    this.update();
+  }
+
   keyDown(evt:KeyboardEvent): void {
     const swallow = [ 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Delete', 'Backspace', 'Space']
     if (swallow.includes(evt.key)) {
