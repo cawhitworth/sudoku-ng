@@ -4,6 +4,7 @@ import { CellComponent } from "../cell/cell.component";
 import { SudokuService } from '../sudoku.service';
 import { Grid } from '../grid';
 import { FormsModule } from '@angular/forms';
+import { ControlsComponent } from '../controls/controls.component';
 
 @Component({
   host: {
@@ -12,7 +13,7 @@ import { FormsModule } from '@angular/forms';
   },
   selector: 'app-grid',
   standalone: true,
-  imports: [CommonModule, CellComponent, FormsModule],
+  imports: [CommonModule, CellComponent, ControlsComponent, FormsModule],
   templateUrl: './grid.component.html',
   styleUrl: './grid.component.css'
 })

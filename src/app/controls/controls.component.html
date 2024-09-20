@@ -1,0 +1,11 @@
+<div class="sudoku-controls">
+    <fieldset>
+        <legend>
+            Mode
+        </legend>
+        <input type="radio" id="annotate-button" name="input-mode" value="annotate" [(ngModel)]="mode" (click)="onModeChange('annotate')"/>
+        <label for="annotate-button">Annotate</label>
+        <input type="radio" id="mark-button" name="input-mode" value="mark" [(ngModel)]="mode" (click)="onModeChange('mark')"/>
+        <label for="mark-button">Mark</label>
+    </fieldset>
+</div>
