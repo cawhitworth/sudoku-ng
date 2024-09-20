@@ -11,7 +11,7 @@
     </div>
     <div *ngSwitchCase="'true'" class="candidates">
         <div *ngFor="let _ of [].constructor(9); let i = index">
-            {{ parentgrid.cells[cellIndex].candidates.includes(i+1) ? (i+1).toString() : ''}}
+            {{ parentgrid.cells[cellIndex].candidates.includes(i+1) ? (i+1).toString() : '&nbsp;'}}
         </div>
     </div>
 </div>

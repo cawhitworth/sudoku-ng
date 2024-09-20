@@ -12,14 +12,6 @@
     gap: 10px;
 }
 
-.sudoku-controls {
-    grid-column: 2;
-    grid-row: 1;
-}
-
-.sudoku-controls button {
-    color: blue;
-}
 
 .sudoku-status {
     grid-column: 1 / 3;
