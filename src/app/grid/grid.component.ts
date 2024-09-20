@@ -40,31 +40,15 @@ export class GridComponent {
     console.log(`Mode: ${this.mode}`);
   }
 
-  gridClicked(cell: number): void {
+  onGridClick(cell: number): void {
     console.log(`Cell ${cell} clicked`);
     this.highlightedCell = cell;
   }
 
-  setCellValue(cell: number, value: number): void {
-    this.sudokuGrid.cells[cell].value = value;
-    this.sudokuGrid.cells[cell].empty = false;
+  onAutoNoteClick():void {
+    console.log("Auto-note");
+    this.sudokuService.generateCandidates();
   }
-
-  toggleInCellCandidates(cell: number, value: number): void {
-    console.log(`Toggle ${value} in ${cell}`)
-    const index = this.sudokuGrid.cells[cell].candidates.indexOf(value);
-    if (index < 0) {
-      this.sudokuGrid.cells[cell].candidates.push(value);
-    } else {
-      this.sudokuGrid.cells[cell].candidates.splice(index, 1);
-    }
-    console.log(`Candidates for ${cell}: ${this.sudokuGrid.cells[cell].candidates}`)
-  }
-
-  clearCell(cell: number) {
-    this.sudokuGrid.cells[cell].empty = true;
-  }
-
 
   keyDown(evt:KeyboardEvent): void {
     const swallow = [ 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Delete', 'Backspace', 'Space']
@@ -78,14 +62,14 @@ export class GridComponent {
     let num = parseInt(evt.key);
     if (this.mode === "mark") {
       if (!Number.isNaN(num)) {
-        this.setCellValue(this.highlightedCell, num);
+        this.sudokuService.setCellValue(this.highlightedCell, num);
       }
       if (evt.key == 'Delete' || evt.key == 'Backspace') {
         this.sudokuGrid.cells[this.highlightedCell].empty = true;
       }
     } else { // Annotate
       if (!Number.isNaN(num)) {
-        this.toggleInCellCandidates(this.highlightedCell, num);
+        this.sudokuService.toggleInCellCandidates(this.highlightedCell, num);
       }
     }
     if (evt.key === 'M' || evt.key === 'm') {

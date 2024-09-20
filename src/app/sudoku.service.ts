@@ -39,7 +39,7 @@ export class SudokuService
     return result.valid;
   }
 
-  partial       = "8842..7.." +
+  partial       = ".842..7.." +
                   "...86.42." +
                   "3.51....9" +
                   ".59.26.7." +
@@ -114,5 +114,72 @@ export class SudokuService
     }
 
     return result;
+  }
+
+  setCellValue(cell: number, value: number): void {
+    this.grid.cells[cell].value = value;
+    this.grid.cells[cell].empty = false;
+  }
+
+  clearCell(cell: number) {
+    this.grid.cells[cell].empty = true;
+  }
+
+  toggleInCellCandidates(cell: number, value: number): void {
+    console.log(`Toggle ${value} in ${cell}`)
+    const index = this.grid.cells[cell].candidates.indexOf(value);
+    if (index < 0) {
+      this.grid.cells[cell].candidates.push(value);
+    } else {
+      this.grid.cells[cell].candidates.splice(index, 1);
+    }
+    console.log(`Candidates for ${cell}: ${this.grid.cells[cell].candidates}`)
+  }
+
+  removeCandidate(cell: number, value: number) {
+    const index = this.grid.cells[cell].candidates.indexOf(value);
+    if (index >= 0) {
+      this.grid.cells[cell].candidates.splice(index, 1);
+      console.log(`Removing ${value} from ${cell}`);
+    }
+  }
+
+  indexInHouse(house: number, index: number): number {
+    let rowBase = Math.floor(house / 3) * 3;
+    let columnBase = (house % 3) * 3;
+
+    let row = rowBase + Math.floor(index / 3);
+    let column = columnBase + index % 3;
+
+    return (row * 9) + column;
+  }
+
+  generateCandidates(): void {
+    for(let i = 0; i < 81; i ++) {
+      if (this.grid.cells[i].empty) {
+        this.grid.cells[i].candidates = [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ];
+      } else {
+        this.grid.cells[i].candidates = [];
+      }
+    }
+
+    for(let i = 0; i < 81; i++) {
+      if (!this.grid.cells[i].empty) {
+        let value = this.grid.cells[i].value;
+        console.log(`Removing ${value} at ${i}`);
+        let row = Math.floor(i/9);
+        let column = i % 9;
+        let house = (Math.floor(row/3) * 3) + Math.floor(column/3);
+
+        for(let j = 0; j < 9; j++) {
+          // row
+          this.removeCandidate((row * 9) + j, value);
+          // column
+          this.removeCandidate((j * 9) + column, value);
+          // house
+          this.removeCandidate(this.indexInHouse(house, j), value);
+      }
+      }
+    }
   }
 }

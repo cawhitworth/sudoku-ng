@@ -5,6 +5,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    transition-duration: 0.25s;
 }
 
 .sudoku-cell.other {

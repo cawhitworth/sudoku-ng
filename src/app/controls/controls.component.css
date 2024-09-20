@@ -3,6 +3,29 @@
     grid-row: 1;
 }
 
+.sudoku-mode {
+    font-size: 150%;
+    font-weight: bold;
+}
+
+.sudoku-mode.label {
+    font-size: 125%;
+}
+
 .sudoku-controls button {
-    color: blue;
+    background-color: #eee;
+    margin: 5px;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 150%;
+    font-weight: bold;
+    transition-duration: 0.1s;
+}
+
+.sudoku-controls button:hover {
+    background-color: #dee;
+}
+
+.sudoku-controls button:active {
+    background-color: #abb;
 }

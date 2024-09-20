@@ -12,9 +12,14 @@ export class ControlsComponent {
   @Input() mode: string = "mark";
 
   @Output() modeChange = new EventEmitter<string>();
+  @Output() autoNoteClick = new EventEmitter();
 
   onModeChange(mode:string) {
     console.log(`Mode change: ${mode}`);
     this.modeChange.emit(mode);
+  }
+
+  onAutoNoteClick(): void {
+    this.autoNoteClick.emit();
   }
 }
