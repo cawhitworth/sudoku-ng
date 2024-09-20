@@ -1,5 +1,7 @@
 export interface Cell {
     value: number,
     empty: boolean,
-    candidates: number[]
+    candidates: number[],
+    marked: number[],
+    rejected: number[]
 }

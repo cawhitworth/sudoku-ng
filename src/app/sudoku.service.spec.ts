@@ -22,7 +22,9 @@ describe('SudokuService', () => {
       invalidCells.push({
         value: 1,
         empty: false,
-        candidates: []
+        candidates: [],
+        marked: [],
+        rejected: []
       });
     }
     expect(service.validate_set(invalidCells).valid).toBeFalse();

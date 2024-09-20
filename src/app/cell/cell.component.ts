@@ -22,7 +22,9 @@ export class CellComponent {
       cells: [ {
         value: 0,
         empty: true,
-        candidates: []
+        candidates: [],
+        marked: [],
+        rejected: []
       }]
     };
     this.cellIndex = 0;

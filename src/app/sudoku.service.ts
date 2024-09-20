@@ -58,7 +58,9 @@ export class SudokuService
       this.grid.cells[i] = {
         empty: false,
         value: 0,
-        candidates: new Array<number>()
+        candidates: new Array<number>(),
+        marked: new Array<number>(),
+        rejected: new Array<number>()
       }
       let c = this.partial[i];
       if (c === '.') {

@@ -3,11 +3,18 @@
         <legend class="sudoku-mode">
             Mode
         </legend>
+        <input type="radio" id="fill-button" name="input-mode" value="annotate" [(ngModel)]="mode" (click)="onModeChange('fill')"/>
+        <label for="fill-button" class="sudoku-mode label">Fill</label>
+        <br/>
         <input type="radio" id="annotate-button" name="input-mode" value="annotate" [(ngModel)]="mode" (click)="onModeChange('annotate')"/>
         <label for="annotate-button" class="sudoku-mode label">Annotate</label>
         <br />
         <input type="radio" id="mark-button" name="input-mode" value="mark" [(ngModel)]="mode" (click)="onModeChange('mark')"/>
         <label for="mark-button" class="sudoku-mode label">Mark</label>
+        <br />
+        <input type="radio" id="reject-button" name="input-mode" value="reject" [(ngModel)]="mode" (click)="onModeChange('reject')"/>
+        <label for="reject-button" class="sudoku-mode label">Reject</label>
+        <br />
     </fieldset>
     <button (click)="onAutoNoteClick()">Auto-note</button>
     <button (click)="onClearAllClick()">Clear All</button>
