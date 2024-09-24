@@ -5,7 +5,11 @@
         [(parentgrid)]="sudokuGrid" (parentgridChange)="update()" (gridClicked)="onGridClick($event)"
         ></app-cell>
     </div>
-    <app-controls [(mode)]="mode" (modeChanged)="update()" (autoNoteClick)="onAutoNoteClick()" (clearAllClick)="onClearAllClick()" />
+    <app-controls 
+        [(mode)]="mode" (modeChanged)="update()"
+        (autoNoteClick)="onAutoNoteClick()"
+        (clearAllClick)="onClearAllClick()" 
+        (numberClick)="numberPressed($event)"/>
     <div class="sudoku-status">
         <p>
             Complete: {{complete?"Yes":"No"}}

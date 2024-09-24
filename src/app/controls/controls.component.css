@@ -29,3 +29,21 @@
 .sudoku-controls button:active {
     background-color: #abb;
 }
+
+.number-buttons {
+    display: inline-grid;
+
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 5px;
+}
+
+.number-button {
+    width: 4em;
+    height: 4em;
+
+    background-color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

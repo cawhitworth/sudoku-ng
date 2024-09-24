@@ -16,6 +16,15 @@
         <label for="reject-button" class="sudoku-mode label">Reject</label>
         <br />
     </fieldset>
+    <div class="sudoku-buttons">
     <button (click)="onAutoNoteClick()">Auto-note</button>
     <button (click)="onClearAllClick()">Clear All</button>
+    </div>
+    <div class="number-buttons">
+        <ng-container *ngFor="let _ of [].constructor(9); let i = index">
+            <div class="number-button" (click)="onNumberClick(i+1)">
+                {{ i+1 }}
+            </div>
+        </ng-container>
+    </div>
 </div>

@@ -66,24 +66,28 @@ export class GridComponent {
     }
   }
 
+  numberPressed(num: number): void {
+    if (this.mode === "fill") {
+      this.sudokuService.setCellValue(this.highlightedCell, num);
+    } else { // Annotate
+      let cellType = this.mode === "mark" ? CellMark.Marked : 
+              this.mode === "annotate" ? CellMark.Candidate :
+              this.mode === "reject" ? CellMark.Rejected :
+              CellMark.None;
+      this.sudokuService.toggleInCellCandidates(this.highlightedCell, num, cellType);
+    }
+  }
+
   keyPressed(evt: KeyboardEvent): void {
     console.log(`Key ${evt.key} pressed`);
     let num = parseInt(evt.key);
-    if (this.mode === "fill") {
-      if (!Number.isNaN(num)) {
-        this.sudokuService.setCellValue(this.highlightedCell, num);
-      }
-      if (evt.key == 'Delete' || evt.key == 'Backspace') {
-        this.sudokuGrid.cells[this.highlightedCell].empty = true;
-      }
-    } else { // Annotate
-      if (!Number.isNaN(num)) {
-        let cellType = this.mode === "mark" ? CellMark.Marked : 
-               this.mode === "annotate" ? CellMark.Candidate :
-               this.mode === "reject" ? CellMark.Rejected :
-               CellMark.None;
-        this.sudokuService.toggleInCellCandidates(this.highlightedCell, num, cellType);
-      }
+    if (!Number.isNaN(num)) {
+      this.numberPressed(num);
+      return;
+    }
+
+    if (evt.key == 'Delete' || evt.key == 'Backspace') {
+      this.sudokuGrid.cells[this.highlightedCell].empty = true;
     }
     if (evt.key === 'M' || evt.key === 'm') {
       this.mode = "mark";
