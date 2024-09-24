@@ -5,6 +5,7 @@ import { SudokuService } from '../sudoku.service';
 import { Grid } from '../grid';
 import { FormsModule } from '@angular/forms';
 import { ControlsComponent } from '../controls/controls.component';
+import { CellMark } from '../cell';
 
 @Component({
   host: {
@@ -77,7 +78,7 @@ export class GridComponent {
       }
     } else { // Annotate
       if (!Number.isNaN(num)) {
-        this.sudokuService.toggleInCellCandidates(this.highlightedCell, num);
+        this.sudokuService.toggleInCellCandidates(this.highlightedCell, num, CellMark.Candidate);
       }
     }
     if (evt.key === 'M' || evt.key === 'm') {

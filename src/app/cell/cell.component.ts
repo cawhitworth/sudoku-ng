@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Grid } from '../grid';
+import { CellMark } from '../cell';
 
 @Component({
   selector: 'app-cell',
@@ -17,14 +18,14 @@ export class CellComponent {
   @Output() parentgridChange = new EventEmitter<Grid>();
   @Output() gridClicked = new EventEmitter<number>();
 
+  cellMark = CellMark;
+
   constructor() {
     this.parentgrid = {
       cells: [ {
         value: 0,
         empty: true,
-        candidates: [],
-        marked: [],
-        rejected: []
+        candidates: new Array<CellMark>(9).fill(CellMark.None),
       }]
     };
     this.cellIndex = 0;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Grid } from './grid';
-import { Cell } from './cell';
+import { Cell, CellMark } from './cell';
 
 export class ValidationResult {
     constructor(valid: boolean, complete: boolean) {
@@ -58,9 +58,7 @@ export class SudokuService
       this.grid.cells[i] = {
         empty: false,
         value: 0,
-        candidates: new Array<number>(),
-        marked: new Array<number>(),
-        rejected: new Array<number>()
+        candidates: new Array<CellMark>(),
       }
       let c = this.partial[i];
       if (c === '.') {
@@ -127,23 +125,21 @@ export class SudokuService
     this.grid.cells[cell].empty = true;
   }
 
-  toggleInCellCandidates(cell: number, value: number): void {
-    console.log(`Toggle ${value} in ${cell}`)
-    const index = this.grid.cells[cell].candidates.indexOf(value);
-    if (index < 0) {
-      this.grid.cells[cell].candidates.push(value);
+  toggleInCellCandidates(cell: number, value: number, mark: CellMark): void {
+    console.log(`Toggle ${value} in ${cell} to ${mark}`)
+    if (this.getCandidate(cell, value) == mark) {
+      this.setCandidate(cell, value, CellMark.None);
     } else {
-      this.grid.cells[cell].candidates.splice(index, 1);
+      this.setCandidate(cell, value, mark);
     }
-    console.log(`Candidates for ${cell}: ${this.grid.cells[cell].candidates}`)
   }
 
-  removeCandidate(cell: number, value: number) {
-    const index = this.grid.cells[cell].candidates.indexOf(value);
-    if (index >= 0) {
-      this.grid.cells[cell].candidates.splice(index, 1);
-      console.log(`Removing ${value} from ${cell}`);
-    }
+  getCandidate(cell: number, value: number): CellMark {
+    return this.grid.cells[cell].candidates[value-1];
+  }
+  setCandidate(cell: number, value: number, cellMark: CellMark) {
+    this.grid.cells[cell].candidates[value-1] = cellMark;
+    console.log(`Setting ${value} in ${cell} to ${cellMark}`);
   }
 
   indexInHouse(house: number, index: number): number {
@@ -158,10 +154,13 @@ export class SudokuService
 
   generateCandidates(): void {
     for(let i = 0; i < 81; i ++) {
-      if (this.grid.cells[i].empty) {
-        this.grid.cells[i].candidates = [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ];
-      } else {
-        this.grid.cells[i].candidates = [];
+      for(let c = 0; c < 9; c++) {
+        if (this.grid.cells[i].empty) {
+          this.grid.cells[i].candidates[c] = CellMark.Candidate;
+        } else {
+          this.grid.cells[i].candidates[c] = CellMark.None;
+        }
+
       }
     }
 
@@ -175,11 +174,11 @@ export class SudokuService
 
         for(let j = 0; j < 9; j++) {
           // row
-          this.removeCandidate((row * 9) + j, value);
+          this.setCandidate((row * 9) + j, value, CellMark.None);
           // column
-          this.removeCandidate((j * 9) + column, value);
+          this.setCandidate((j * 9) + column, value, CellMark.None);
           // house
-          this.removeCandidate(this.indexInHouse(house, j), value);
+          this.setCandidate(this.indexInHouse(house, j), value, CellMark.None);
       }
       }
     }

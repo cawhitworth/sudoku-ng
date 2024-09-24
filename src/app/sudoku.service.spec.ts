@@ -1,8 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { SudokuService } from './sudoku.service';
-import { Cell } from './cell';
-import { isValidDate } from 'rxjs/internal/util/isDate';
+import { Cell, CellMark } from './cell';
 
 describe('SudokuService', () => {
   let service: SudokuService;
@@ -23,8 +22,6 @@ describe('SudokuService', () => {
         value: 1,
         empty: false,
         candidates: [],
-        marked: [],
-        rejected: []
       });
     }
     expect(service.validate_set(invalidCells).valid).toBeFalse();
@@ -44,15 +41,17 @@ describe('SudokuService', () => {
       }
       service.generateCandidates();
       for(let i = 0; i < 81; i++) {
-        expect(service.grid.cells[i].candidates).toEqual([ 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+        for (let c = 0; c < 9; c++) {
+          expect(service.grid.cells[i].candidates[c]).toEqual(CellMark.Candidate);
+        }
       }
     });
 
     for (const {index, expected} of 
-    [ { index: 30, expected: [] },
-      { index: 31, expected: [ 2,3,4,5,6,7,8,9 ]},
-      { index: 39, expected: [ 2,3,4,5,6,7,8,9 ]},
-      { index: 40, expected: [ 2,3,4,5,6,7,8,9 ]},
+    [ { index: 30, expected: [ CellMark.None,CellMark.None,CellMark.None,CellMark.None,CellMark.None,CellMark.None,CellMark.None,CellMark.None,CellMark.None ] },
+      { index: 31, expected: [ CellMark.None,CellMark.Candidate,CellMark.Candidate,CellMark.Candidate,CellMark.Candidate,CellMark.Candidate,CellMark.Candidate,CellMark.Candidate,CellMark.Candidate ] },
+      { index: 39, expected: [ CellMark.None,CellMark.Candidate,CellMark.Candidate,CellMark.Candidate,CellMark.Candidate,CellMark.Candidate,CellMark.Candidate,CellMark.Candidate,CellMark.Candidate ] },
+      { index: 40, expected: [ CellMark.None,CellMark.Candidate,CellMark.Candidate,CellMark.Candidate,CellMark.Candidate,CellMark.Candidate,CellMark.Candidate,CellMark.Candidate,CellMark.Candidate ] },
     ]) {
     it(`should remove the candidate correctly [${index}]`, () => {
       for(let i = 0; i < 81; i++) {

@@ -1,7 +1,12 @@
+export enum CellMark {
+    None,
+    Candidate,
+    Marked,
+    Rejected
+}
+
 export interface Cell {
     value: number,
     empty: boolean,
-    candidates: number[],
-    marked: number[],
-    rejected: number[]
+    candidates: CellMark[],
 }
