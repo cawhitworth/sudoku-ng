@@ -32,18 +32,30 @@
 
 .number-buttons {
     display: inline-grid;
+    margin: 1em;
 
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    gap: 5px;
+    gap: 0.1em;
 }
 
 .number-button {
-    width: 4em;
-    height: 4em;
+    width: 3em;
+    height: 3em;
 
+    font-size: 150%;
+    font-weight: bold;
+    border-radius: 10px;
+    border: solid #000;
     background-color: #eee;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.number-button :hover {
+    background-color: #dee;
+}
+
+.number-button :active {
+    background-color: #abb;
 }
