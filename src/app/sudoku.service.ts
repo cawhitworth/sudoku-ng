@@ -154,11 +154,17 @@ export class SudokuService
 
   generateCandidates(): void {
     for(let i = 0; i < 81; i ++) {
-      for(let c = 0; c < 9; c++) {
+
+      for(let c = 1; c < 10; c++) {
+
         if (this.grid.cells[i].empty) {
-          this.grid.cells[i].candidates[c] = CellMark.Candidate;
+
+          if (this.getCandidate(i, c) != CellMark.Marked && this.getCandidate(i,c) != CellMark.Rejected) {
+            this.setCandidate(i,c,CellMark.Candidate);
+          }
+
         } else {
-          this.grid.cells[i].candidates[c] = CellMark.None;
+            this.setCandidate(i,c,CellMark.None);
         }
 
       }
@@ -173,13 +179,13 @@ export class SudokuService
         let house = (Math.floor(row/3) * 3) + Math.floor(column/3);
 
         for(let j = 0; j < 9; j++) {
-          // row
-          this.setCandidate((row * 9) + j, value, CellMark.None);
-          // column
-          this.setCandidate((j * 9) + column, value, CellMark.None);
-          // house
-          this.setCandidate(this.indexInHouse(house, j), value, CellMark.None);
-      }
+          const cells = [ (row*9) + j, (j * 9) + column, this.indexInHouse(house, j) ];
+          for (let c of cells) {
+            if (this.getCandidate(c, value) == CellMark.Candidate) {
+              this.setCandidate(c, value, CellMark.None);
+            }
+          }
+        }
       }
     }
   }
