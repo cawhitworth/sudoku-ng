@@ -15,6 +15,12 @@
                 <span *ngSwitchCase="cellMark.Candidate">
                     {{ i+1 }}
                 </span>
+                <span *ngSwitchCase="cellMark.Marked" class="marked">
+                    {{ i+1 }}
+                </span>
+                <span *ngSwitchCase="cellMark.Rejected" class="rejected">
+                    {{ i+1 }}
+                </span>
                 <span *ngSwitchDefault>
                     &nbsp;
                 </span>

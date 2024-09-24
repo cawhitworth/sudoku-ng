@@ -27,3 +27,12 @@
     column-gap: 1em;
     color: #aaa;
 }
+
+.marked {
+    color: #3ae;
+}
+
+.rejected {
+    color: #a00;
+    text-decoration: line-through;
+}

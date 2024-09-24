@@ -3,7 +3,7 @@
         <legend class="sudoku-mode">
             Mode
         </legend>
-        <input type="radio" id="fill-button" name="input-mode" value="annotate" [(ngModel)]="mode" (click)="onModeChange('fill')"/>
+        <input type="radio" id="fill-button" name="input-mode" value="fill" [(ngModel)]="mode" (click)="onModeChange('fill')"/>
         <label for="fill-button" class="sudoku-mode label">Fill</label>
         <br/>
         <input type="radio" id="annotate-button" name="input-mode" value="annotate" [(ngModel)]="mode" (click)="onModeChange('annotate')"/>

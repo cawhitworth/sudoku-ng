@@ -69,7 +69,7 @@ export class GridComponent {
   keyPressed(evt: KeyboardEvent): void {
     console.log(`Key ${evt.key} pressed`);
     let num = parseInt(evt.key);
-    if (this.mode === "mark") {
+    if (this.mode === "fill") {
       if (!Number.isNaN(num)) {
         this.sudokuService.setCellValue(this.highlightedCell, num);
       }
@@ -78,14 +78,24 @@ export class GridComponent {
       }
     } else { // Annotate
       if (!Number.isNaN(num)) {
-        this.sudokuService.toggleInCellCandidates(this.highlightedCell, num, CellMark.Candidate);
+        let cellType = this.mode === "mark" ? CellMark.Marked : 
+               this.mode === "annotate" ? CellMark.Candidate :
+               this.mode === "reject" ? CellMark.Rejected :
+               CellMark.None;
+        this.sudokuService.toggleInCellCandidates(this.highlightedCell, num, cellType);
       }
     }
     if (evt.key === 'M' || evt.key === 'm') {
       this.mode = "mark";
     }
-    if (evt.key === 'AM' || evt.key === 'a') {
+    if (evt.key === 'A' || evt.key === 'a') {
       this.mode = "annotate";
+    }
+    if (evt.key === 'F' || evt.key === 'f') {
+      this.mode = "fill";
+    }
+    if (evt.key === 'R' || evt.key === 'r') {
+      this.mode = "reject";
     }
     if (evt.key === 'ArrowLeft' && this.highlightedCell % 9 > 0) {
       this.highlightedCell -= 1;
