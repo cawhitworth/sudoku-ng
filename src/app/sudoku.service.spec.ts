@@ -34,6 +34,12 @@ describe('SudokuService', () => {
     expect(service.indexInHouse(3, 4)).toBe(37);
   });
 
+  it('should return the right seen cells', () => {
+    let seenBy = service.seenBy(30).sort();
+    let expected = [ 27, 28, 29, 30, 31, 32, 33, 34, 35, 3, 12, 21, 39, 48, 57, 66, 75, 40, 41, 49, 50 ].sort();
+    expect(seenBy).toEqual(expected);
+  });
+
   describe('when generating candidates', () => {
     it('should generate candidates correctly', () => {
       for(let i = 0; i < 81; i++) {

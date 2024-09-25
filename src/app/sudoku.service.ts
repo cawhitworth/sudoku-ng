@@ -88,9 +88,60 @@ export class SudokuService
     return result;
   }
 
+  row(index: number): number
+  {
+    return Math.floor(index / 9);
+  }
+
+  column(index: number): number
+  {
+    return index % 9;
+  }
+
+  house(index: number) : number
+  {
+    return (Math.floor(this.row(index)/3) * 3) + Math.floor(this.column(index)/3);
+  }
+
   index(col: number, row:number) : number
   {
     return row * 9 + col;
+  }
+
+  indexInHouse(house: number, index: number): number {
+    let rowBase = Math.floor(house / 3) * 3;
+    let columnBase = (house % 3) * 3;
+
+    let row = rowBase + Math.floor(index / 3);
+    let column = columnBase + index % 3;
+
+    return (row * 9) + column;
+  }
+
+  cellsInRow(row: number): number[] {
+    let baseIndex = row * 9;
+    let cells = [];
+    for(let i = 0; i < 9; i++) { cells.push(baseIndex++); }
+    return cells;
+  }
+
+  cellsInColumn(column: number): number[] {
+    let baseIndex = column;
+    let cells = [];
+    for(let i =0; i<9; i++) { cells.push(baseIndex); baseIndex += 9; }
+
+    return cells;
+  }
+
+  cellsInHouse(house: number): number[] {
+    let baseIndex = this.indexInHouse(house, 0);
+    let cells = [];
+    for(let i =0; i < 9; i++) {
+      let hr = Math.floor(i / 3);
+      let hc = i % 3;
+      cells.push(baseIndex + hr * 9 + hc);
+    }
+    return cells;
   }
 
   validate() : ValidationResult
@@ -142,16 +193,6 @@ export class SudokuService
     console.log(`Setting ${value} in ${cell} to ${cellMark}`);
   }
 
-  indexInHouse(house: number, index: number): number {
-    let rowBase = Math.floor(house / 3) * 3;
-    let columnBase = (house % 3) * 3;
-
-    let row = rowBase + Math.floor(index / 3);
-    let column = columnBase + index % 3;
-
-    return (row * 9) + column;
-  }
-
   generateCandidates(): void {
     for(let i = 0; i < 81; i ++) {
 
@@ -174,9 +215,9 @@ export class SudokuService
       if (!this.grid.cells[i].empty) {
         let value = this.grid.cells[i].value;
         console.log(`Removing ${value} at ${i}`);
-        let row = Math.floor(i/9);
-        let column = i % 9;
-        let house = (Math.floor(row/3) * 3) + Math.floor(column/3);
+        let row = this.row(i);
+        let column = this.column(i);
+        let house = this.house(i);
 
         for(let j = 0; j < 9; j++) {
           const cells = [ (row*9) + j, (j * 9) + column, this.indexInHouse(house, j) ];
@@ -188,5 +229,20 @@ export class SudokuService
         }
       }
     }
+  }
+
+  seenBy(cell: number): number[] {
+    let allSeen = new Set<number>([]);
+    for(const i of this.cellsInRow(this.row(cell))) {
+      allSeen.add(i);
+    }
+    for(const i of this.cellsInColumn(this.column(cell))) {
+      allSeen.add(i);
+    }
+    for(const i of this.cellsInHouse(this.house(cell))) {
+      allSeen.add(i);
+    }
+
+    return Array.from(allSeen.values());
   }
 }

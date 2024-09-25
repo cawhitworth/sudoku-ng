@@ -59,3 +59,13 @@
 .number-button :active {
     background-color: #abb;
 }
+
+
+.sudoku-assists {
+    font-size: 150%;
+    font-weight: bold;
+}
+
+.sudoku-assists.label {
+    font-size: 125%;
+}

@@ -11,8 +11,10 @@ import { FormsModule } from '@angular/forms';
 })
 export class ControlsComponent {
   @Input() mode: string = "mark";
+  @Input() autoremove: boolean = true;
 
   @Output() modeChange = new EventEmitter<string>();
+  @Output() autoremoveChange = new EventEmitter<boolean>();
   @Output() autoNoteClick = new EventEmitter();
   @Output() clearAllClick = new EventEmitter();
   @Output() numberClick = new EventEmitter<number>();
