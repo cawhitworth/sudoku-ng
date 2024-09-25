@@ -24,7 +24,8 @@ export class GridComponent {
   highlightedCell: number = 0;
   complete: boolean = false;
   valid: boolean = false;
-  mode: string = "annotate";
+  mode: string = "fill";
+  autoremove: boolean = true;
 
   constructor() {
     this.sudokuGrid = this.sudokuService.getGrid()
@@ -69,6 +70,14 @@ export class GridComponent {
   numberPressed(num: number): void {
     if (this.mode === "fill") {
       this.sudokuService.setCellValue(this.highlightedCell, num);
+      if (this.autoremove) {
+        let seenCells = this.sudokuService.seenBy(this.highlightedCell);
+        for(const cell of seenCells) {
+          if (this.sudokuService.getCandidate(cell, num) == CellMark.Candidate) {
+            this.sudokuService.setCandidate(cell, num, CellMark.None);
+          }
+        }
+      }
     } else { // Annotate
       let cellType = this.mode === "mark" ? CellMark.Marked : 
               this.mode === "annotate" ? CellMark.Candidate :
@@ -76,6 +85,7 @@ export class GridComponent {
               CellMark.None;
       this.sudokuService.toggleInCellCandidates(this.highlightedCell, num, cellType);
     }
+    this.update();
   }
 
   keyPressed(evt: KeyboardEvent): void {

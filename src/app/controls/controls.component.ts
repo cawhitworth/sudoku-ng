@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ControlsComponent {
   @Input() mode: string = "mark";
-  @Input() autoremove: boolean = true;
+  @Input() autoremove!: boolean;
 
   @Output() modeChange = new EventEmitter<string>();
   @Output() autoremoveChange = new EventEmitter<boolean>();
@@ -22,6 +22,11 @@ export class ControlsComponent {
   onModeChange(mode:string) {
     console.log(`Mode change: ${mode}`);
     this.modeChange.emit(mode);
+  }
+
+  onAutoremoveChange() {
+    console.log(`Autoremove: ${this.autoremove}`)
+    this.autoremoveChange.emit(this.autoremove);
   }
 
   onAutoNoteClick(): void {

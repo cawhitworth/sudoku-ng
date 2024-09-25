@@ -31,7 +31,7 @@
         <legend class="sudoku-assists">
             Assists
         </legend>
-        <input type="checkbox" id="autoremove" name="autoremove" [(ngModel)]="autoremove" />
+        <input type="checkbox" id="autoremove" name="autoremove" [(ngModel)]="autoremove" (change)="onAutoremoveChange()" />
         <label for="autoremove">Auto-remove annotations on fill</label>
     </fieldset>
 </div>

@@ -7,9 +7,10 @@
     </div>
     <app-controls 
         [(mode)]="mode" (modeChanged)="update()"
+        [(autoremove)]="autoremove"
         (autoNoteClick)="onAutoNoteClick()"
         (clearAllClick)="onClearAllClick()" 
-        (numberClick)="numberPressed($event)"/>
+        (numberClick)="numberPressed($event)" />
     <div class="sudoku-status">
         <p>
             Complete: {{complete?"Yes":"No"}}
